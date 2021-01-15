@@ -1,0 +1,41 @@
+_sidebar-and-main-panel.scss
+    > .content{
+        padding: 0 30px 30px;
+        min-height: calc(100vh - 123px);
+        margin-top: 30px; //93px
+    }
+
+
+_navbar.scss
+    &.navbar-relative{ // added by abhishek
+        position: relative;
+        width: 100%;
+        padding-top: 10px;
+        z-index: 1029;
+    }
+
+
+paper-dashboard.css
+    .navbar.navbar-relative { /*added by abhishek*/
+        position: relative;
+        width: 100%;
+        padding-top: 10px;
+        z-index: 1029; }
+
+    .main-panel{
+        margin-top: 30px; } /* 93px */
+    }
+
+    @media screen and (max-width: 991px) {
+        .navbar.navbar-relative { /* added by abhishek */
+            padding-top: 0; }
+    }
+
+
+DemoNavbar.js
+    className={ //navbar-absolute
+          this.props.location.pathname.indexOf("full-screen-maps") !== -1
+            ? "navbar-relative fixed-top"
+            : "navbar-relative fixed-top " +
+              (this.state.color === "transparent" ? "navbar-transparent " : "")
+        }
