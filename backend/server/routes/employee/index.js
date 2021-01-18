@@ -1,6 +1,6 @@
 import express from 'express'
 import signIn from '../../controller/employee/signIn/index.js'
-import { deleteEmployee, getAllEmployee, getEmployee, getPaginatedEmployee, newEmployee } from '../../controller/employee/index.js'
+import { deleteEmployee, getAllEmployee, getEmployee, getEmployeeById, getPaginatedEmployee, newEmployee, salaryPayment } from '../../controller/employee/index.js'
 import { authorizer, isAdmin } from '../../helpers/authorizer/index.js'
 const employeeRouter = express.Router()
 
@@ -15,5 +15,7 @@ employeeRouter.get('/employee/get', authorizer(), getEmployee)
 employeeRouter.get('/employee/getallemployee', authorizer(), getAllEmployee)
 employeeRouter.get('/employee/paginated/', authorizer(), getPaginatedEmployee)
 employeeRouter.delete('/employee/delete/:id', authorizer(), isAdmin, deleteEmployee)
+employeeRouter.get('/employee/:id', authorizer(), getEmployeeById)
+employeeRouter.put('/employee/salary/:id', authorizer(), isAdmin, salaryPayment)
 
 export default employeeRouter

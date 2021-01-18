@@ -1,8 +1,27 @@
 import mongoose from '../../connnect.js'
 
-let schema = mongoose.Schema
+let Schema = mongoose.Schema
 
-const Leads = new schema({
+const CallHistory = new Schema({
+    nextCallDate : {
+        type: String,
+        required: true
+    },
+    callStatus: {
+        type: String,
+        default: "Pending",
+        enum: ["Pending", "Done"]
+    },
+    description: {
+        type: String,
+        default: "Pending",
+        enum: ["Pending", "Done"]
+    },
+},{
+    timestamps: true
+})
+
+const Leads = new Schema({
     fname: {
         type: String,
         required: true,
@@ -52,7 +71,6 @@ const Leads = new schema({
         default: "House",
         enum: ["House", "Shop"]
     },
-
     leadSource: {
         type: String,
         required: true
@@ -83,6 +101,7 @@ const Leads = new schema({
         type: String,
         required: true
     },
+    callHistory : [ CallHistory ]
 },{
     timestamps: true
 })

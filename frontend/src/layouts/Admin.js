@@ -26,18 +26,26 @@ class Dashboard extends React.Component {
   }
 
   componentWillMount(){
-    if(localStorage.getItem('tokn')){
-      if(JSON.parse(localStorage.getItem('usr')).role === 0){
-        this.props.history.replace("/admin/dashboard")
-      }else{
-        this.props.history.replace("/user")
-      }      
-    }else{
+    // if not admin 
+    if(localStorage.getItem('tokn') && JSON.parse(localStorage.getItem('usr')).role !== 0){
+      // localStorage.removeItem('usr');
       localStorage.removeItem('tokn');
-      localStorage.removeItem('usr')
-      this.props.history.replace("/login")
+      this.props.history.replace("/login")   
     }
   }
+  // componentWillMount(){
+  //   if(localStorage.getItem('tokn')){
+  //     if(JSON.parse(localStorage.getItem('usr')).role === 0){
+  //       this.props.history.replace("/admin")
+  //     }else{
+  //       this.props.history.replace("/employee")
+  //     }      
+  //   }else{
+  //     localStorage.removeItem('tokn');
+  //     localStorage.removeItem('usr')
+  //     this.props.history.replace("/login")
+  //   }
+  // }
   componentDidMount() {
 
     if(!localStorage.getItem('tokn')){

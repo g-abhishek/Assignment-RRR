@@ -17,7 +17,7 @@ class Footer extends React.Component {
               <ul>
                 <li>
                   <a>
-                    FittZee &copy; {1900 + new Date().getYear()} 
+                    Assignment &copy; {1900 + new Date().getYear()} 
                   </a>
                 </li>
               </ul>
@@ -25,7 +25,7 @@ class Footer extends React.Component {
             <div className="credits ml-auto">
               <div className="copyright">
                 Made with{" "}
-                <i className="fa fa-heart heart text-danger" /> for FittZee 2.0.0
+                <i className="fa fa-heart heart text-danger" /> for Assignment
               </div>
             </div>
           </Row>

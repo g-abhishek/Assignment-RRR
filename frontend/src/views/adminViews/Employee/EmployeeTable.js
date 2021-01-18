@@ -5,6 +5,7 @@ import { Row, Col, Card, CardBody, Label, Button, ButtonDropdown } from 'reactst
 import Pagination from 'react-js-pagination'
 import Swal from 'sweetalert2'
 import { store } from 'react-notifications-component'
+import { Link } from 'react-router-dom'
 
 
 
@@ -38,7 +39,7 @@ class EmployeeTable extends Component {
                 for (var i = 0; i < response.data.paginatedData.length; i++) {
                     let rowItem = response.data.paginatedData[i]
                     rowItem["status"] = rowItem.status ? <span className="font-weight-bold">Active</span> : <span className="text-danger font-weight-bold">Inactive</span>
-                    rowItem["editBtn"] = <Button onClick={this.handleEdit} className="btn btn-info py-2 px-3"> &#x270E;</Button>
+                    rowItem["editBtn"] = <Link to={`/admin/employee/${rowItem._id}`} className="btn btn-info py-2 px-3"> &#x270E;</Link>
                     rowItem["deleteBtn"] = <Button onClick={() => this.handleDelete(rowItem._id)} className="btn btn-danger py-2 px-3">x</Button>
 
                     rowsData.push(rowItem)
@@ -66,6 +67,8 @@ class EmployeeTable extends Component {
     handleDelete = (id) => {
         console.log(id)
 
+        const prevEmployeeData = this.state.employeeData;
+
         Swal.fire({
             title: "Delete Lead?",
             text: "You will not able to recover this data ?",
@@ -76,6 +79,10 @@ class EmployeeTable extends Component {
         }).then(result => {
             if (result.value) {
 
+                this.setState({
+                    employeeData: this.state.employeeData.filter(user => user._id !== id)
+                })
+
                 Axios.delete(`http://127.0.0.1:3005/employee/delete/${id}`, {
                     headers: {
                         'Authorization': `Bearer ${localStorage.getItem('tokn')}`
@@ -83,12 +90,57 @@ class EmployeeTable extends Component {
                 }).then(response => {
                     console.log(response)
 
+                    if(response.data.statusCode === 401){
+                        store.addNotification({
+                            title: "Failed!",
+                            message: response.data.message,
+                            type: "danger",
+                            insert: "top",
+                            container: "top-right",
+                            animationIn: ["animated", "fadeIn"],
+                            animationOut: ["animated", "fadeOut"],
+                            dismiss: {
+                              duration: 2000,
+                              onScreen: true
+                            }
+                        });
+                    }
+
                     if (response.data.statusCode === 200) {
                         console.log(response)
+                        store.addNotification({
+                            title: "Success!",
+                            message: "Deleted Successfully!",
+                            type: "success",
+                            insert: "top",
+                            container: "top-right",
+                            animationIn: ["animated", "fadeIn"],
+                            animationOut: ["animated", "fadeOut"],
+                            dismiss: {
+                              duration: 2000,
+                              onScreen: true
+                            }
+                        });
                     }
 
                 }).catch(error => {
                     console.log(error)
+                    this.setState({
+                        employeeData: prevEmployeeData
+                    })
+                    store.addNotification({
+                        title: "Error!",
+                        message: "Internal Server Error!",
+                        type: "info",
+                        insert: "top",
+                        container: "top-right",
+                        animationIn: ["animated", "fadeIn"],
+                        animationOut: ["animated", "fadeOut"],
+                        dismiss: {
+                        duration: 2000,
+                        onScreen: true
+                        }
+                    });
                 })
 
             } else if (result.dismiss === Swal.DismissReason.cancel) {

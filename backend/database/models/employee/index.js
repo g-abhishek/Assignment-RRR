@@ -2,9 +2,30 @@ import mongoose from '../../connnect.js'
 import crypto from 'crypto'
 import {v1 as uuid} from 'uuid'
 
-let schema = mongoose.Schema
+let Schema = mongoose.Schema
 
-const Employee = new schema({
+const SalaryHistory = new Schema({ 
+    salary: {
+        type: Number,
+        required: true
+    },
+    paymentDate: {
+        type: String, 
+        default: new Date()
+    },
+    paymentType: {
+        type: String,
+        required: true
+    },
+    paymentComment: {
+        type: String,
+        default: "N/A"
+    },
+},{
+    timestamps: true
+})
+
+const Employee = new Schema({
     fname: {
         type: String,
         required: true,
@@ -70,6 +91,7 @@ const Employee = new schema({
     hashedPassword: {
         type: String,
     },
+    salaryHistory: [SalaryHistory],
 },{
     timestamps: true
 })

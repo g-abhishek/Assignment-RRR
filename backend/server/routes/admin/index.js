@@ -11,6 +11,6 @@ adminRouter.get('/test', (req, res) => {
 })
 
 adminRouter.post('/admin/register',  signUp)
-adminRouter.post('/admin/login', signInValidator, signIn)
+adminRouter.post('/admin/login',  signIn)
 
 export default adminRouter

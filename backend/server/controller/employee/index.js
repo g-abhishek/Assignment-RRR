@@ -63,6 +63,26 @@ export function getEmployee(req, res){
     })
 }
 
+export function getEmployeeById(req, res) {
+    Employee.findById(req.params.id).select(" fname lname email street pincode city state contact gender status salary salaryHistory ").then(result => {
+        if(result === null) {
+            return res.send({
+                statusCode: 401,
+                result: "User not found"
+            })
+        }
+        return res.send({
+            statusCode: 200,
+            result: result
+        })
+    }).catch(error => {
+        return res.send({
+            statusCode: 500,
+            error: error.message
+        })
+    })
+}
+
 export function getAllEmployee(req, res){
 
     Employee.aggregate([
@@ -165,6 +185,36 @@ export function deleteEmployee(req, res){
             statusCode: 500,
             message: "Error while deleting Employee",
             error: error.message
+        })
+    })
+}
+
+export function salaryPayment(req, res) {
+    Employee.findByIdAndUpdate(req.params.id, {
+        $push: {
+            salaryHistory: {
+                $each: [req.body],
+                $position: 0
+            }
+        }
+    },{
+        new: true
+    }).then(result => {
+        if(result === null){
+            return res.send({
+                statusCode: 401,
+                message: "User not found"
+            })
+        }
+        return res.send({
+            statusCode: 200,
+            result: result
+        })
+    }).catch(error => {
+        console.log(error)
+        return res.send({
+            statusCode: 500,
+            message: "Internal Server error"
         })
     })
 }

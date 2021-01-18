@@ -9,7 +9,7 @@ import "assets/scss/paper-dashboard.scss?v=1.2.0";
 import "assets/demo/demo.css";
 import "perfect-scrollbar/css/perfect-scrollbar.css";
 
-import AdminLayout from "layouts/Admin.js";
+import AdminLayout from "./layouts/Admin.js";
 import UserLayout from "./layouts/Employee.js";
 import ReactNotification from 'react-notifications-component'
 import 'react-notifications-component/dist/theme.css'
@@ -27,11 +27,11 @@ ReactDOM.render(
     <ReactNotification />
     <Switch>
       <Route exact path="/login" render={(props) => <LoginPage {...props} />} />
-      <Route exact path="/login/admin" render={(props) => <AdminLogin {...props} />} />
+      {/* <Route exact path="/login/admin" render={(props) => <AdminLogin {...props} />} /> */}
       <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
-      <Route path="/user" render={(props) => <UserLayout {...props} />} />
+      <Route path="/employee" render={(props) => <UserLayout {...props} />} />
       
-      {localStorage.getItem('tokn') ? (JSON.parse(localStorage.getItem('usr')).role === 0 ? <Redirect to="/admin/dashboard" /> : <Redirect to="/user" />)  : <Redirect to="/login" />}
+      {localStorage.getItem('tokn') ? (JSON.parse(localStorage.getItem('usr')).role === 0 ? <Redirect to="/admin/dashboard" /> : <Redirect to="/employee/dashboard" />)  : <Redirect to="/login" />}
       {/* {localStorage.getItem('tokn') ? <Redirect to="/admin/dashboard" /> : <Redirect to="/login" />} */}
       
     </Switch>

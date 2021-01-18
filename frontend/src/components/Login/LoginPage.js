@@ -26,7 +26,7 @@ class LoginPage extends Component {
       if(JSON.parse(localStorage.getItem('usr')).role === 0){
         this.props.history.replace("/admin/dashboard")
       }else{
-        this.props.history.replace("/user")
+        this.props.history.replace("/employee/dashboard")
       }
       
     }else{
@@ -69,7 +69,7 @@ class LoginPage extends Component {
             console.log(response.data.token)
             localStorage.setItem('tokn', response.data.token)
             localStorage.setItem('usr', JSON.stringify(response.data.user))
-            this.props.history.replace('/user')
+            this.props.history.replace('/employee/dashboard')
             
           }
 

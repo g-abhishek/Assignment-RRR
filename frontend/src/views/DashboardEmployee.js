@@ -11,10 +11,10 @@ import CountUp from 'react-countup';
 import { store } from 'react-notifications-component';
 import 'react-notifications-component/dist/theme.css'
 
-import { adminTopCards } from './../components/Shared/dashboardCards.js'
+import { employeeTopCards } from './../components/Shared/dashboardCards.js'
 import axios from "axios";
 
-class Dashboard extends React.Component {
+class DashboardEmployee extends React.Component {
   constructor(props){
     super(props)
     this.state = {
@@ -118,7 +118,7 @@ class Dashboard extends React.Component {
         <h4>Important :</h4>
           <Row>
           
-          {adminTopCards.map((item)=>{
+          {employeeTopCards.map((item)=>{
 
             return (
               <Col lg="3" md="6" sm="6" key={item.id}>
@@ -474,4 +474,4 @@ class Dashboard extends React.Component {
   }
 }
 
-export default Dashboard;
+export default DashboardEmployee;

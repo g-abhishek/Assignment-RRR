@@ -8,7 +8,7 @@ import DemoNavbar from "components/Navbars/DemoNavbar.js";
 import Footer from "components/Footer/Footer.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
 
-import {sidebarRoutes, routes} from "routes.js";
+import {employeeSidebarRoutes, routes} from "routes.js";
 import Axios from "axios";
 import FadeIn from 'react-fade-in'
 import { Offline, Online } from "react-detect-offline";
@@ -25,20 +25,30 @@ class Dashboard extends React.Component {
     this.mainPanel = React.createRef();
   }
 
+
   componentWillMount(){
-    if(localStorage.getItem('tokn')){
-      if(JSON.parse(localStorage.getItem('usr')).role === 1){
-        this.props.history.replace("/user")
-      }else{
-        this.props.history.replace("/admin")
-      }
-      
-    }else{
+    // if not employee 
+    if(localStorage.getItem('tokn') && JSON.parse(localStorage.getItem('usr')).role !== 1){
+      // localStorage.removeItem('usr');
       localStorage.removeItem('tokn');
-      localStorage.removeItem('usr')
-      this.props.history.replace("/login")
+      this.props.history.replace("/login")   
     }
   }
+
+  // componentWillMount(){
+  //   if(localStorage.getItem('tokn')){
+  //     if(JSON.parse(localStorage.getItem('usr')).role === 1){
+  //       this.props.history.replace("/employee")
+  //     }else{
+  //       this.props.history.replace("/admin")
+  //     }
+      
+  //   }else{
+  //     localStorage.removeItem('tokn');
+  //     localStorage.removeItem('usr')
+  //     this.props.history.replace("/login")
+  //   }
+  // }
 
   componentDidMount() {
 
@@ -75,7 +85,7 @@ class Dashboard extends React.Component {
       <div className="wrapper">
         <Sidebar
           {...this.props}
-          routes={sidebarRoutes}
+          routes={employeeSidebarRoutes}
           bgColor={this.state.backgroundColor}
           activeColor={this.state.activeColor}
           style={{fontSize:"16px"}}
